@@ -9,7 +9,7 @@ namespace Tarea2Perros.Controllers
 			return View();
 		}
 
-		public IActionResult Info()
+		public IActionResult Raza()
 		{
 			return View();
 		}
