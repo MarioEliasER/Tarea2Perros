@@ -4,6 +4,5 @@ var app = builder.Build();
 
 app.MapDefaultControllerRoute();
 app.UseStaticFiles();
-app.UseMvc();
 
 app.Run();
