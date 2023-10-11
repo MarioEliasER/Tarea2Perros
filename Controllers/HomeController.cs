@@ -10,6 +10,7 @@ namespace Tarea2Perros.Controllers
 		public IActionResult Index()
 		{
 			PerrosContext context = new();
+			
 			var datos = context.Razas.OrderBy(x=>x.Nombre).Select(x => new IndexRazasViewModel
 			{
 				Id = x.Id,
