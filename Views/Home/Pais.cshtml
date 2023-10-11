@@ -1,92 +1,29 @@
-﻿@{
+﻿@model IEnumerable<Tarea2Perros.Models.ViewModels.PaisViewModel>
+@{
     Layout = "Layout";
 }
 <section class="nav">
     <h3>Razas por país</h3>
     <nav>
-        <a href="index.html">Listado Alfabético de Razas</a>
+        <a href="~/Home/Index">Listado Alfabético de Razas</a>
     </nav>
 </section>
 
 <section class="list">
-    <h4>GRAN BRETAÑA</h4>
-    <ul>
-        <li>
-            <a href="raza.html">
-                <img src="imgs_perros/80_0.jpg" />
-                Golden Retriever
-            </a>
-        </li>
-        <li>
-            <a href="raza.html">
-                <img src="imgs_perros/80_0.jpg" />
-                Golden Retriever
-            </a>
-        </li>
-        <li>
-            <a href="raza.html">
-                <img src="imgs_perros/80_0.jpg" />
-                Golden Retriever
-            </a>
-        </li>
-        <li>
-            <a href="raza.html">
-                <img src="imgs_perros/80_0.jpg" />
-                Golden Retriever
-            </a>
-        </li>
-        <li>
-            <a href="raza.html">
-                <img src="imgs_perros/80_0.jpg" />
-                Golden Retriever
-            </a>
-        </li>
-        <li>
-            <a href="raza.html">
-                <img src="imgs_perros/80_0.jpg" />
-                Golden Retriever
-            </a>
-        </li>
-    </ul>
-    <h4>GRAN BRETAÑA</h4>
-    <ul>
-        <li>
-            <a href="raza.html">
-                <img src="imgs_perros/80_0.jpg" />
-                Golden Retriever
-            </a>
-        </li>
-        <li>
-            <a href="raza.html">
-                <img src="imgs_perros/80_0.jpg" />
-                Golden Retriever
-            </a>
-        </li>
-        <li>
-            <a href="raza.html">
-                <img src="imgs_perros/80_0.jpg" />
-                Golden Retriever
-            </a>
-        </li>
-        <li>
-            <a href="raza.html">
-                <img src="imgs_perros/80_0.jpg" />
-                Golden Retriever
-            </a>
-        </li>
-        <li>
-            <a href="raza.html">
-                <img src="imgs_perros/80_0.jpg" />
-                Golden Retriever
-            </a>
-        </li>
-        <li>
-            <a href="raza.html">
-                <img src="imgs_perros/80_0.jpg" />
-                Golden Retriever
-            </a>
-        </li>
-    </ul>
-
+    @foreach (var paises in Model)
+    {
+        <h4>@paises.Pais</h4>
+        <ul>
+            @foreach (var perros in paises.PerrosxPais)
+            {
+                <li>
+                    <a href="~/Home/Raza/@perros.Nombre.Replace(" ", "-")">
+                        <img src="~/imgs_perros/@(perros.Id)_0.jpg" />
+                        @perros.Nombre
+                    </a>
+                </li>
+            }
+        </ul>
+    }
 </section>
 

@@ -20,6 +20,7 @@ namespace Tarea2Perros.Controllers
 
 		public IActionResult Raza(string Id)
 		{
+			Id = Id.Replace("-", " ");
 			PerrosContext context = new();
 			var datos = context.Razas.Include(x => x.IdPaisNavigation).Include(x => x.Estadisticasraza).Include(x => x.Caracteristicasfisicas).Where(x=>x.Nombre == Id).Select(x => new RazaViewModel
 			{
@@ -48,9 +49,19 @@ namespace Tarea2Perros.Controllers
 			return View(datos);
 		}
 
-		public IActionResult Pais()
+		public IActionResult Pais(string Id)
 		{
-			return View();
+			PerrosContext context = new();
+			var datos = context.Paises.OrderBy(x => x.Nombre).Select(x => new PaisViewModel
+			{
+				Pais = x.Nombre ?? "N/A",
+				PerrosxPais = x.Razas.OrderBy(x => x.Nombre).Select(x => new PerroModel
+				{
+					Id = x.Id,
+					Nombre= x.Nombre
+				})
+			});
+			return View(datos);
 		}
 	}
 }
