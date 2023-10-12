@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Tarea2Perros.Models.Entities;
 using Tarea2Perros.Models.ViewModels;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Tarea2Perros.Controllers
 {
@@ -10,14 +11,22 @@ namespace Tarea2Perros.Controllers
 		public IActionResult Index(string Id)
 		{
 			PerrosContext context = new();
-			
-			var datos = context.Razas.OrderBy(x=>x.Nombre).Select(x => new IndexRazasViewModel
+			var listaletras = context.Razas.OrderBy(x=> x.Nombre).Select(x=> x.Nombre[0]).ToList();
+			var listasinrepeticion = listaletras.Distinct().ToList();
+			if (Id == null)
 			{
-				Id = x.Id,
-				Nombre = x.Nombre,
-			});
-			return View(datos);
-		}
+                var datos = context.Razas.OrderBy(x => x.Nombre).Select(x => new ListaPerrosModel
+                {
+                    Id = x.Id,
+                    Nombre = x.Nombre
+				});
+            }
+			else
+			{
+
+			}
+            
+        }
 
 		public IActionResult Raza(string Id)
 		{
@@ -47,13 +56,20 @@ namespace Tarea2Perros.Controllers
 				Pelo = x.Caracteristicasfisicas != null ? x.Caracteristicasfisicas.Pelo : "N/A",
 				Color = x.Caracteristicasfisicas != null ? x.Caracteristicasfisicas.Color : "N/A"
 			}).FirstOrDefault();
-			var random = new Random();
-			var perrosrandom = context.Razas.Where(x=> x.Nombre != Id).ToList().Select(x=> new PerrosModel
+			if (datos != null)
 			{
-				Id = x.Id,
-				Nombre = x.Nombre
-			}).OrderBy(x=> random.Next()).Take(4).ToList();
-			datos.ListaPerros = perrosrandom.ToList();
+                var random = new Random();
+                var perrosrandom = context.Razas.Where(x => x.Nombre != Id).ToList().Select(x => new PerrosModel
+                {
+                    Id = x.Id,
+                    Nombre = x.Nombre
+                }).OrderBy(x => random.Next()).Take(4).ToList();
+                datos.ListaPerros = perrosrandom.ToList();
+            }
+			else
+			{
+				return RedirectToAction("Index");
+			}
             return View(datos);
 		}
 
