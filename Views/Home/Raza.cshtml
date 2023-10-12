@@ -62,20 +62,11 @@
 
 <section class="otrosPerros">
 
-    <a href="raza.html">
-        <img src="imgs_perros/80_0.jpg" />
-        <h2>Golden Retriever</h2>
-    </a>
-    <a href="raza.html">
-        <img src="imgs_perros/128_0.jpg" />
-        <h2>Keeshond</h2>
-    </a>
-    <a href="raza.html">
-        <img src="imgs_perros/109_0.jpg" />
-        <h2>Collie Barbudo</h2>
-    </a>
-    <a href="raza.html">
-        <img src="imgs_perros/58_0.jpg" />
-        <h2>Galgo Italiano</h2>
-    </a>
+    @foreach (var perros in Model.ListaPerros)
+    {
+        <a href="~/Home/Raza/@perros.Nombre.Replace(" ", "-")">
+            <img src="~/imgs_perros/@(perros.Id)_0.jpg" />
+            <h2>@perros.Nombre</h2>
+        </a>
+    }
 </section>

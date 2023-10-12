@@ -7,7 +7,7 @@ namespace Tarea2Perros.Controllers
 {
 	public class HomeController : Controller
 	{
-		public IActionResult Index()
+		public IActionResult Index(string Id)
 		{
 			PerrosContext context = new();
 			
@@ -47,7 +47,14 @@ namespace Tarea2Perros.Controllers
 				Pelo = x.Caracteristicasfisicas != null ? x.Caracteristicasfisicas.Pelo : "N/A",
 				Color = x.Caracteristicasfisicas != null ? x.Caracteristicasfisicas.Color : "N/A"
 			}).FirstOrDefault();
-			return View(datos);
+			var random = new Random();
+			var perrosrandom = context.Razas.Where(x=> x.Nombre != Id).ToList().Select(x=> new PerrosModel
+			{
+				Id = x.Id,
+				Nombre = x.Nombre
+			}).OrderBy(x=> random.Next()).Take(4).ToList();
+			datos.ListaPerros = perrosrandom.ToList();
+            return View(datos);
 		}
 
 		public IActionResult Pais(string Id)

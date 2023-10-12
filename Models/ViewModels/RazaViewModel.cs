@@ -43,5 +43,13 @@
         public string? Pelo { get; set; }
 
         public string? Color { get; set; }
+
+        public IEnumerable<PerrosModel> ListaPerros { get; set; } = null!;
+    }
+
+    public class PerrosModel
+    {
+        public uint Id { get; set; }
+        public string? Nombre { get; set; } = null!;
     }
 }
