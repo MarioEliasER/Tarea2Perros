@@ -80,7 +80,7 @@ namespace Tarea2Perros.Controllers
             return View(datos);
 		}
 
-		public IActionResult Pais(string Id)
+		public IActionResult Pais()
 		{
 			PerrosContext context = new();
 			var datos = context.Paises.OrderBy(x => x.Nombre).Select(x => new PaisViewModel
