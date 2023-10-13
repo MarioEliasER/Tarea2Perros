@@ -11,8 +11,9 @@ namespace Tarea2Perros.Controllers
 		public IActionResult Index(string Id)
 		{
 			PerrosContext context = new();
+			IndexRazasViewModel vm = new();
 			var listaletras = context.Razas.OrderBy(x=> x.Nombre).Select(x=> x.Nombre[0]).ToList();
-			var listasinrepeticion = listaletras.Distinct().ToList();
+			vm.ListaLetrasAbecedario = listaletras.Distinct();
 			if (Id == null)
 			{
                 var datos = context.Razas.OrderBy(x => x.Nombre).Select(x => new ListaPerrosModel
@@ -20,12 +21,18 @@ namespace Tarea2Perros.Controllers
                     Id = x.Id,
                     Nombre = x.Nombre
 				});
+				vm.ListaRazas = datos;
             }
 			else
 			{
-
+				var datos = context.Razas.OrderBy(x => x.Nombre).Where(x => x.Nombre.StartsWith(Id)).Select(x => new ListaPerrosModel
+				{
+					Id = x.Id,
+					Nombre = x.Nombre
+				});
+				vm.ListaRazas = datos;
 			}
-            
+			return View(vm);
         }
 
 		public IActionResult Raza(string Id)

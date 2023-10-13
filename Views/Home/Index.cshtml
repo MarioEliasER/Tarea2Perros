@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Tarea2Perros.Models.ViewModels.IndexRazasViewModel>
+﻿@model Tarea2Perros.Models.ViewModels.IndexRazasViewModel
 @{
 	Layout = "Layout";
 }
@@ -6,15 +6,16 @@
     <h3>ABC de Razas</h3>
     <nav>
         <a href="~/Home/Index">Todas</a>
-        <a href="index.html">A</a>
-        <a href="index.html">B</a>
-        <a href="index.html">C</a>
+        @foreach (var letra in Model.ListaLetrasAbecedario)
+        {
+            <a href="~/Home/Index/@letra">@letra</a>
+        }
         <a href="~/Home/Pais">Listado por país</a>
     </nav>
 </section>
 <section class="list">
     <ul>
-        @foreach (var razas in Model)
+        @foreach (var razas in Model.ListaRazas)
         {
             <li>
                 <a href="~/Home/Raza/@razas.Nombre.Replace(" ", "-")">
